@@ -338,9 +338,23 @@ class SamplerPkl(object):
         return:
             sampling id.
         """
+        
         filename = results['frame_dir']
-        data_loaded = pickle.load(open(filename, 'rb'), encoding='bytes')
-        video_name, label, frames = data_loaded
+        print(filename)
+        if os.path.basename(filename).split(".")[1] == "pkl":
+            data_loaded = pickle.load(open(filename, 'rb'), encoding='bytes')
+            video_name, label, frames = data_loaded
+        else:
+            cap = cv2.VideoCapture(filename)
+            frames = []
+            while(cap.isOpened):
+                ret, frame = cap.read()
+                if ret == False:
+                    break
+                frames.append(frame)
+            
+            cap.release()
+            label = {"动作类型": "测试动作类型"}
         if isinstance(label, dict):
             label = label['动作类型']
             results['labels'] = label
@@ -352,6 +366,8 @@ class SamplerPkl(object):
         results['frames_len'] = len(frames)
         frames_len = results['frames_len']
         average_dur = int(int(frames_len) / self.num_seg)
+        print("frame_len: ", frames_len)
+        print("average_dur: ", average_dur)
         imgs = []
         for i in range(self.num_seg):
             idx = 0
@@ -374,9 +390,15 @@ class SamplerPkl(object):
 
             for jj in range(idx, idx + self.seg_len):
                 imgbuf = frames[int(jj % results['frames_len'])]
-                img = self._get(imgbuf)
+                if os.path.basename(filename).split(".")[1] == "pkl":
+                    img = self._get(imgbuf)
+                else:
+                    img = imgbuf
                 imgs.append(img)
         results['backend'] = self.backend
+        print("num_seg: ",self.num_seg)
+        print("seg_len: ",self.seg_len)
+        print("len of imgs: ", len(imgs))
         results['imgs'] = imgs
 
         return results

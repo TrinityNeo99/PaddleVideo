@@ -24,6 +24,7 @@ try:
 except:
     import pickle
 import paddle.fluid as fluid
+import paddle
 
 from utils.config_utils import *
 import models
@@ -37,7 +38,7 @@ FORMAT = '[%(levelname)s: %(filename)s: %(lineno)4d]: %(message)s'
 logging.basicConfig(level=logging.DEBUG, format=FORMAT, stream=sys.stdout)
 logger = logging.getLogger(__name__)
 
-
+paddle.enable_static()
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--model_name',

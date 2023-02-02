@@ -44,7 +44,7 @@ TEST:
     filelist: "./data/dataset/tsn/test.list"
 
 INFER:
-    seg_num: 300  # infer using 300 segments
+    seg_num: 100  # infer using 300 segments
     short_size: 256
     target_size: 224
     num_reader_threads: 12

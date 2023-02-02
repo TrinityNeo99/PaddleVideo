@@ -137,3 +137,10 @@ output
 .log.txt
 inference
 
+# videoTag
+application/videoTag/data/*
+application/videoTag/weights/*
+
+applications/VideoTag/data/tsn_features/*
+applications/VideoTag/weights/*
+applications/VideoTag/data/mp4/*

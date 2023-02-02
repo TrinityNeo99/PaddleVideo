@@ -150,6 +150,7 @@ class TSN_ResNet():
 
         feature = fluid.layers.reshape(x=pool,
                                        shape=[-1, seg_num, pool.shape[1]])
+        print("get tsn feature")
         if self.is_extractor:
             out = feature
         else:

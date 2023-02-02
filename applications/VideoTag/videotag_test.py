@@ -20,6 +20,8 @@ import argparse
 import ast
 import numpy as np
 import paddle.fluid as fluid
+import paddle
+
 
 from utils.config_utils import *
 import models
@@ -33,6 +35,7 @@ FORMAT = '[%(levelname)s: %(filename)s: %(lineno)4d]: %(message)s'
 logging.basicConfig(level=logging.INFO, format=FORMAT, stream=sys.stdout)
 logger = logging.getLogger(__name__)
 
+paddle.enable_static()
 
 def parse_args():
     parser = argparse.ArgumentParser()
